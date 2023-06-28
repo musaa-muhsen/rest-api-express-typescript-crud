@@ -1,10 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import usersRoutes from './routes/users.js';
+import usersRoutes from '../routes/users';
 
 const app = express();
 
-const PORT = 5007;
+const PORT: number = 5007;
 
 // initilize body parser middleware 
 // this is going to tell the script that we're going to use json data in our whole application
@@ -15,10 +15,10 @@ app.use(bodyParser.json());
 // all paths are starting with /users
 app.use('/users', usersRoutes)
 
-app.get('/', (req,res) => {
-    console.log('[TEST]!')
-    res.send('Hello from homepage')
-})
+// app.get('/', (req: express.Request ,res: express.Response) => {
+//     console.log('[TEST]!')
+//     res.send('Hello from homepage')
+// })
 // 
 app.listen(PORT, () =>
 console.log(`Server running on port: http://localhost:${PORT} `) )
