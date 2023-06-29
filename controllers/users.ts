@@ -1,17 +1,12 @@
 import {v4 as uuidv4} from 'uuid';
 //let users = []
 import rawData from '../users.json';
-
+import {User} from '../types'
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
 
-interface User {
-    firstName?: string;
-    lastName?: string;
-    age?: number;
-    id: string;
-}
+
 
 let users: User[] = rawData as User[];
 
