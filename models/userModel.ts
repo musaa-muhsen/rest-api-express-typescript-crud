@@ -1,7 +1,16 @@
 import {User} from '../types';
 import rawData from '../users.json';
-
+import {v4 as uuidv4} from 'uuid'; 
 let users: User[] = rawData as User[];
+
+
+import fs from 'fs';
+import path from 'path';
+
+const writeUsersToJson: () => void = () => {
+    fs.writeFileSync(path.join(__dirname, '../users.json'), JSON.stringify(users))
+}
+
 
 const findAll = (): Promise<User[]> => {
     return new Promise((resolve, reject) => {
@@ -9,10 +18,14 @@ const findAll = (): Promise<User[]> => {
     });
 }
 
-const create = (user: User): Promise<string> => {
+const create = (user: Partial<User>): Promise<string> => {
     return new Promise((resolve, reject) => {
-        users.push(user);
-        console.log('user id',user.id)
+        const newUser = {
+            id: uuidv4(),
+            ...user
+        }
+        users.push(newUser as User);
+       // console.log('user id',user.id)
         resolve(`User with the id of ${user.id} has been added to the database 🤖.`)
     })
 }
@@ -42,8 +55,8 @@ const updateById = (
                 return;
             }
 
-            console.log('users[userIndex]', users[userIndex])
-            console.log('updatedUser', updatedUser)
+            // console.log('users[userIndex]', users[userIndex])
+            // console.log('updatedUser', updatedUser)
 
             users[userIndex] = {...users[userIndex], ...updatedUser}
 
