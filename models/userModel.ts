@@ -19,14 +19,16 @@ const findAll = (): Promise<User[]> => {
 }
 
 const create = (user: Partial<User>): Promise<string> => {
+    console.log('user create model',user)
     return new Promise((resolve, reject) => {
         const newUser = {
             id: uuidv4(),
             ...user
         }
         users.push(newUser as User);
-       // console.log('user id',user.id)
-        resolve(`User with the id of ${user.id} has been added to the database 🤖.`)
+        writeUsersToJson()
+       
+        resolve(`User with the id of ${user.firstName} ${user.lastName}has been added to the database 🤖.`)
     })
 }
 
@@ -40,6 +42,7 @@ const findById = (id: string): Promise<User | undefined> => {
 const removeById = (id: string): Promise<string> => {
     return new Promise((resolve, reject) => {
         users = users.filter(user => user.id !== id);
+        writeUsersToJson()
         resolve(`User: ${id} is deleted from database.`)
     })
 }
@@ -59,7 +62,7 @@ const updateById = (
             // console.log('updatedUser', updatedUser)
 
             users[userIndex] = {...users[userIndex], ...updatedUser}
-
+            writeUsersToJson()
             resolve(`User with id ${id} has been updated.`)
 
         })

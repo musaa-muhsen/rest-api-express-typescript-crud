@@ -10,14 +10,15 @@ import userModel from '../models/userModel';
 
 let users: User[] = rawData as User[];
 
-const writeUsersToJson: () => void = () => {
-    fs.writeFileSync(path.join(__dirname, '../users.json'), JSON.stringify(users))
-}
+// const writeUsersToJson: () => void = () => {
+//     fs.writeFileSync(path.join(__dirname, '../users.json'), JSON.stringify(users))
+// }
 
 export const getUsers = async (req : express.Request,res: express.Response) => {
 
     try {
         const users = await userModel.findAll();
+        console.log('users',users)
         res.send(users);
     } catch (error){
         console.log(error)
@@ -26,10 +27,15 @@ export const getUsers = async (req : express.Request,res: express.Response) => {
 }
 
 
-export const createUser = async (req : express.Request,res: express.Response) => {
+export const createUser = async (
+    req : express.Request,
+    res: express.Response
+) => {
+    console.log('req controllers createUser',req.body)
 
     const message = await userModel.create(req.body);
     res.send(message);
+    
     // const user = req.body;
     // users.push({...user, id: uuidv4()});
     // writeUsersToJson();
